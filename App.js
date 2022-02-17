@@ -1,11 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
+import { borderLeftColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import { Task } from './components/Task';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+     
+     <View style={styles.taskContainer}>
+       <Text style={styles.sectionTitle}>
+         To-do List
+       </Text>
+     </View>
+
+     <View style={styles.items}>
+      < Task text={'Task 1'} />
+      < Task text={'Task 2'}/>
+     </View>
+
+    <KeyboardAvoidingView></KeyboardAvoidingView>
+
     </View>
   );
 }
@@ -13,8 +28,19 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#CED7D6',
+    
   },
+taskContainer: {
+  paddingTop: 80,
+  paddingHorizontal: 20,
+},
+sectionTitle: {
+  fontSize: 24,
+  fontWeight: 'bold',
+  color: '#252E2D'
+},
+items: {
+  marginTop: 30,
+},
 });
