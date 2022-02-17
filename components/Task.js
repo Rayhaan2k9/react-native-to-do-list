@@ -27,6 +27,8 @@ item: {
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 20,
+    marginLeft: 20,
+    marginRight: 20,
 },
 itemLeft: {
     flexDirection: 'row',

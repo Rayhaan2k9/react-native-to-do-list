@@ -1,10 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity } from 'react-native'
-inport {GrAdd} from 'react-icons/gr'
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, Keyboard } from 'react-native'
 import { Task } from './components/Task';
 
 export default function App() {
+
+  const [task, setTask] = useState();
+  const [taskList, setTaskList] = useState([])
+
+  const handleAddTask = () => {
+    Keyboard.dismiss();
+    setTaskList([...taskList, task])
+    setTask(null)
+  }
+
+  const deleteTask = (index) => {
+    let tasksCopy = [...taskList];
+    tasksCopy.splice(index, 1);
+    setTaskList(tasksCopy)
+  }
+
   return (
     <View style={styles.container}>
      
@@ -15,20 +30,26 @@ export default function App() {
      </View>
 
      <View style={styles.items}>
-      < Task text={'Task 1'} />
-      < Task text={'Task 2'}/>
+
+       {
+         taskList.map((item, index) => {
+           return <TouchableOpacity key={index} onPress={() => deleteTask(index)}>
+             < Task text={item} />
+           </TouchableOpacity>
+         })
+       }
      </View>
 
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? "padding" : "height"}
       style = {styles.textInputContainer}>
-          <TextInput style={styles.textInput} placeholder={'Write a to-do'}>
+          <TextInput style={styles.textInput} value={task} onChangeText={currText => setTask(currText)} placeholder={'Write a to-do'}>
 
           </TextInput>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={task ? () => handleAddTask(): null}>
             <View style ={styles.addButtonContainer}>
-              <Text style={styles.addButton}>Add</Text>
+              <Text style={styles.addButton}>+</Text>
             </View>
           </TouchableOpacity>
     </KeyboardAvoidingView>
@@ -48,6 +69,7 @@ taskContainer: {
   paddingHorizontal: 20,
 },
 sectionTitle: {
+  alignSelf: 'center',
   fontSize: 24,
   fontWeight: 'bold',
   color: '#252E2D'
@@ -85,5 +107,8 @@ addButtonContainer: {
   borderWidth: 2,
 
 },
-addButton: {},
+addButton: {
+  fontSize: 30,
+  color: '#55BCF6',
+},
 });
